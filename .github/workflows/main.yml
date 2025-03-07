@@ -17,7 +17,12 @@ jobs:
     steps:
       - name: View Software version
         run: sw_vers
-      
+  
+  parallel-job-ubuntu:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Just sample step
+        run: echo "I'm ubunutu, hi!"
 
   dependent-job:
     runs-on: windows-latest
