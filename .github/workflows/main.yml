@@ -23,6 +23,12 @@ jobs:
     steps:
       - name: Just sample step
         run: echo "I'm ubunutu, hi!"
+      
+  parallel-job-windows:
+    runs-on: windows-latest
+    steps:
+      - name: It's Windows job
+        run: echo "I'm Windows, hi!"
 
   dependent-job:
     runs-on: windows-latest
