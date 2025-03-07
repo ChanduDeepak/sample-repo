@@ -26,6 +26,7 @@ jobs:
       
   parallel-job-windows:
     runs-on: windows-latest
+    needs: parallel-job-ubuntu
     steps:
       - name: It's Windows job
         run: echo "I'm Windows, hi!"
