@@ -1,0 +1,19 @@
+name: calling the other workflow
+run-name: This job is calling another workflow to deploy
+
+on:
+  push:
+    branches:
+      - main
+jobs:
+  Build-and-Deploy:
+    uses: ChanduDeepak/sample-repo/new/main/.github/workflows/reusable-workflow.yml@main
+    with: 
+      environment: "staging"
+      image_tag: "latest"
+    secrets:
+      AZURE_CREDENTIALS: ${{ secrets.AZURE_CREDENTIALS }}
+      ACR_NAME: ${{ secrets.ACR_NAME }}
+      
+    
+      
