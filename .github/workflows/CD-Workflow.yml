@@ -1,0 +1,17 @@
+name: CD-Workflow
+
+on: 
+  workflow_run:
+    workflows: ["CI-Workflow"]
+    types: 
+      - completed
+    branches:
+      - main
+
+jobs:
+  deploy-job:
+    if: {{ github.event.workflow_run.conclusion == 'success' }}
+    runs-on: ubuntu-latest
+    steps:
+    - name: Deploy job starts
+      run: echo "Deploying the job"
