@@ -1,0 +1,38 @@
+name: Deploy to AKS
+run-name: This job deploying to AKS from branch '{{ github.events.input.ref }}'
+
+on: 
+  workflow_call:
+    inputs:
+      environment:
+        description: Environment name
+        required: true
+        type: string
+      image_tag:
+        required: true
+        type: string
+    secrets:
+      AZURE_CREDENTIALS:
+        required: true
+      ACR_NAME:
+        required: true
+
+jobs:
+  deploy-job:
+    runs-on: ubuntu-latest
+    steps:
+    - name: checkout code
+      uses: actions/checkout@v4
+    - name: Login to Azure
+      uses: azure/login@v1
+      with: 
+        creds: ${{ secrets.AZURE_CREDENTIALS }}
+    - name: Pull image from ACR
+      run: |
+        az acr login --name ${{ secrets.ACR_NAME }}
+        docker pull ${{ secrets.ACR_NAME }}.azurecr.io/product-fe:${{ inputs.image_tag }}
+    - name: Deploy to AKS
+      run: |
+       kubectl apply -f k8s/${{ inputs.environment }}/deployment.yaml
+      
+      
